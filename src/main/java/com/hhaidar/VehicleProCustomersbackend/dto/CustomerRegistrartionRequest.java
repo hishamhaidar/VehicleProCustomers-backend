@@ -12,6 +12,6 @@ import javax.persistence.Column;
 public class CustomerRegistrartionRequest {
     private String firstName;
     private String lastName;
-    private String customerEmail;
-    private String customerEmailPassword;
+    private String email;
+    private String password;
 }

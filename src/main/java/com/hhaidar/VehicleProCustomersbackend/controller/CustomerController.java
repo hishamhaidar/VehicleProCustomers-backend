@@ -1,5 +1,7 @@
 package com.hhaidar.VehicleProCustomersbackend.controller;
 
+import com.hhaidar.VehicleProCustomersbackend.dto.AuthRequest;
+import com.hhaidar.VehicleProCustomersbackend.dto.AuthenticationResponse;
 import com.hhaidar.VehicleProCustomersbackend.dto.CustomerRegistrartionRequest;
 import com.hhaidar.VehicleProCustomersbackend.service.CustomerServices;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +20,12 @@ public class CustomerController {
     @PostMapping("/register")
     public ResponseEntity<String> registerCustomer(@RequestBody CustomerRegistrartionRequest registrartionRequest){
         return customerServices.registerCustomer(registrartionRequest);
+    }
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticateUser(
+            @RequestBody AuthRequest authRequestt) {
+        return customerServices.authenticate(authRequestt);
+
+
     }
 }
