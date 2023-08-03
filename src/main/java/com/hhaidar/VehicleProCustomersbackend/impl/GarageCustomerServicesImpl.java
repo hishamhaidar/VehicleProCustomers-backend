@@ -59,7 +59,7 @@ public class GarageCustomerServicesImpl implements GarageCustomerServices {
         modifiedCustomer.setFirstName(registrartionRequest.getFirstName());
         modifiedCustomer.setLastName(registrartionRequest.getLastName());
         modifiedCustomer.setCustomerEmail(registrartionRequest.getEmail());
-        modifiedCustomer.setCustomerEmailPassword(registrartionRequest.getPassword());
+        modifiedCustomer.setCustomerEmailPassword(passwordEncoder.encode(registrartionRequest.getPassword()));
         customerRepo.save(modifiedCustomer);
         return ResponseEntity.ok("User modified succesfully");
 
