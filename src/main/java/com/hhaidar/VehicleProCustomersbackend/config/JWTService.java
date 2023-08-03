@@ -1,5 +1,5 @@
-package com.hhaidar.VehicleProCustomersbackend.service;
-import com.hhaidar.VehicleProCustomersbackend.model.Customers;
+package com.hhaidar.VehicleProCustomersbackend.config;
+import com.hhaidar.VehicleProCustomersbackend.model.GarageCustomers;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,7 +15,7 @@ import java.util.function.Function;
 @Service
 public class JWTService {
     private final String SECRET_KEY ="7a4a63e490bc5e65da4eef781c880e4019776cf75897e159e5096b9b37f4fc21";
-    public String generateToken(Customers customer){
+    public String generateToken(GarageCustomers customer){
 
        return Jwts.builder()
                 .setSubject(customer.getCustomerEmail())

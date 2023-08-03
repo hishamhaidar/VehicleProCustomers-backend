@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class AuthenticationResponse {
+public class AuthenticationResponseDTO {
     private String jwtToken;
 }

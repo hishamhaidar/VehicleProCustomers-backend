@@ -1,5 +1,4 @@
 package com.hhaidar.VehicleProCustomersbackend.config;
-import com.hhaidar.VehicleProCustomersbackend.service.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

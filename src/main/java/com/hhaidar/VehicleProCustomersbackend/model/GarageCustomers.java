@@ -3,7 +3,6 @@ package com.hhaidar.VehicleProCustomersbackend.model;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +16,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Customers implements UserDetails {
+public class GarageCustomers implements UserDetails {
     @Id
     @GeneratedValue
     private Integer customerID;
