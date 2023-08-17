@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Repository
-public interface CustoemrVehiclesRepo extends JpaRepository<CustomersVehicles,Integer> {
-    Optional<CustomersVehicles> findByVehicleIdAndVehicleOwnerID(Integer vehicleID, Integer vehicleOwnerID);
+public interface CustomerVehiclesRepo extends JpaRepository<CustomersVehicles,Integer> {
+    Optional<CustomersVehicles> findByVehicleIDAndVehicleOwnerID(Integer vehicleID, Integer vehicleOwnerID);
 
 
     ArrayList<CustomersVehicles> findAllByVehicleOwnerID(Integer vehicleOwnerID);

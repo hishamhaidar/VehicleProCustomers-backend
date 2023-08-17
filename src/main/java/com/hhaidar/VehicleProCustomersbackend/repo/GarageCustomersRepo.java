@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface GarageCustomersRepo extends JpaRepository<GarageCustomers,Integer> {
-    public Optional<GarageCustomers> findUserByCustomerEmail(String customerEmail) ;
+    public Optional<GarageCustomers> findByCustomerEmail(String customerEmail) ;
 }

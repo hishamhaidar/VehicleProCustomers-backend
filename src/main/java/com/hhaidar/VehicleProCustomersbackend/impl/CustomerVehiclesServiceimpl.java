@@ -3,7 +3,7 @@ package com.hhaidar.VehicleProCustomersbackend.impl;
 import com.hhaidar.VehicleProCustomersbackend.dto.VehicleRegisteryRequestDTO;
 import com.hhaidar.VehicleProCustomersbackend.model.CustomersVehicles;
 import com.hhaidar.VehicleProCustomersbackend.model.GarageCustomers;
-import com.hhaidar.VehicleProCustomersbackend.repo.CustoemrVehiclesRepo;
+import com.hhaidar.VehicleProCustomersbackend.repo.CustomerVehiclesRepo;
 import com.hhaidar.VehicleProCustomersbackend.repo.GarageCustomersRepo;
 import com.hhaidar.VehicleProCustomersbackend.service.CustomersVehiclesService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerVehiclesServiceimpl  implements CustomersVehiclesService {
     private final GarageCustomersRepo vehicleOwnerRepo;
-    private final CustoemrVehiclesRepo vehiclesRepo;
+    private final CustomerVehiclesRepo vehiclesRepo;
     @Override
     public ResponseEntity<String> addVehicle(Integer vehicleOwnerID, VehicleRegisteryRequestDTO vehicleRegisteryRequest) {
         Optional<GarageCustomers> vehicleOwner = vehicleOwnerRepo.findById(vehicleOwnerID);
@@ -38,7 +38,7 @@ public class CustomerVehiclesServiceimpl  implements CustomersVehiclesService {
 
     @Override
     public ResponseEntity<String> editVehicle(Integer vehicleOwnerID, Integer vehicleID, VehicleRegisteryRequestDTO vehicleRegisteryRequest) {
-        Optional<CustomersVehicles> existingVehicle = vehiclesRepo.findByVehicleIdAndVehicleOwnerID(vehicleID,vehicleOwnerID);
+        Optional<CustomersVehicles> existingVehicle = vehiclesRepo.findByVehicleIDAndVehicleOwnerID(vehicleID,vehicleOwnerID);
         if (!existingVehicle.isPresent())
             return ResponseEntity.badRequest().body("No vehicle exist for this customerID ");
         CustomersVehicles modifiedVehicle = existingVehicle.get();
@@ -51,7 +51,7 @@ public class CustomerVehiclesServiceimpl  implements CustomersVehiclesService {
 
     @Override
     public ResponseEntity<String> deleteVehicle(Integer vehicleOwnerID, Integer vehicleID) {
-        Optional<CustomersVehicles> existingVehicle = vehiclesRepo.findByVehicleIdAndVehicleOwnerID(vehicleID,vehicleOwnerID);
+        Optional<CustomersVehicles> existingVehicle = vehiclesRepo.findByVehicleIDAndVehicleOwnerID(vehicleID,vehicleOwnerID);
         if (!existingVehicle.isPresent())
             return ResponseEntity.badRequest().body("No vehicle exist for this customerID ");
         vehiclesRepo.delete(existingVehicle.get());

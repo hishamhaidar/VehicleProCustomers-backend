@@ -21,12 +21,12 @@ public class CustomersVehiclesController {
         return vehiclesService.addVehicle(vehicleOwnerID,vehicleRegisteryRequest);
     }
 
-    @PutMapping ("/edit/{vehicleOwnerID}/{vehicleID")
+    @PutMapping ("/edit/{vehicleOwnerID}/{vehicleID}")
     public ResponseEntity<String> editVehicle(@PathVariable Integer vehicleOwnerID,@PathVariable Integer vehicleID,@RequestBody
     VehicleRegisteryRequestDTO vehicleRegisteryRequest ){
         return vehiclesService.editVehicle(vehicleOwnerID,vehicleID,vehicleRegisteryRequest);
     }
-    @DeleteMapping  ("/delete/{vehicleOwnerID}/{vehicleID")
+    @DeleteMapping  ("/delete/{vehicleOwnerID}/{vehicleID}")
     public ResponseEntity<String> deleteVehicle(@PathVariable Integer vehicleOwnerID,@PathVariable Integer vehicleID)
     {
         return vehiclesService.deleteVehicle(vehicleOwnerID,vehicleID);

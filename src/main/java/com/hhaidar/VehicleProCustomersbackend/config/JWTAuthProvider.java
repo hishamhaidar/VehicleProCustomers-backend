@@ -18,7 +18,7 @@ public class JWTAuthProvider {
     private final GarageCustomersRepo customerRepo;
     @Bean
     public UserDetailsService userDetailsService() throws UsernameNotFoundException{
-        return email -> customerRepo.findUserByCustomerEmail(email).orElseThrow(()->new UsernameNotFoundException("User doesnt exist"));
+        return email -> customerRepo.findByCustomerEmail(email).orElseThrow(()->new UsernameNotFoundException("User doesnt exist"));
     }
     @Bean
     public AuthenticationProvider authenticationProvider(){

@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Service
@@ -28,7 +27,7 @@ public class GarageCustomerServicesImpl implements GarageCustomerServices {
     private final AuthenticationManager authenticationManager;
 @Override
     public ResponseEntity<String> registerCustomer(CustomerRegistrartionRequestDTO registrartionRequest) {
-        Optional<GarageCustomers> customerExist = customerRepo.findUserByCustomerEmail(registrartionRequest.getEmail());
+        Optional<GarageCustomers> customerExist = customerRepo.findByCustomerEmail(registrartionRequest.getEmail());
         if (customerExist.isPresent())
             return  ResponseEntity.badRequest().body(new UserExists("CUSTOMER EMAIL ALREADY EXIST").toString());
         GarageCustomers newCustomer = GarageCustomers.builder()
@@ -43,7 +42,7 @@ public class GarageCustomerServicesImpl implements GarageCustomerServices {
 @Override
     public ResponseEntity<AuthenticationResponseDTO> authenticate(AuthRequestDTO authRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(),authRequest.getPassword()));
-        Optional<GarageCustomers> customer = customerRepo.findUserByCustomerEmail(authRequest.getEmail());
+        Optional<GarageCustomers> customer = customerRepo.findByCustomerEmail(authRequest.getEmail());
         String jwtToken = jwtService.generateToken(customer.get());
         return ResponseEntity.ok(AuthenticationResponseDTO.builder()
                 .jwtToken(jwtToken)
@@ -52,7 +51,7 @@ public class GarageCustomerServicesImpl implements GarageCustomerServices {
 
     @Override
     public ResponseEntity<String> modifyAccountData(String email,CustomerRegistrartionRequestDTO registrartionRequest){
-        Optional<GarageCustomers> userByCustomerEmail = customerRepo.findUserByCustomerEmail(email);
+        Optional<GarageCustomers> userByCustomerEmail = customerRepo.findByCustomerEmail(email);
             if (!userByCustomerEmail.isPresent())
                 return ResponseEntity.badRequest().body(new UsernameNotFoundException("User doesnt exist").toString());
         GarageCustomers modifiedCustomer = userByCustomerEmail.get();
