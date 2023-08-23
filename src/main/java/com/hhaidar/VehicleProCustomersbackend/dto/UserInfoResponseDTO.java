@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VehicleRegisteryRequestDTO {
-    private String brand;
-    private String model;
-    private String yearOfProduction;
+public class UserInfoResponseDTO {
+    private Integer userID;
+    private String firstName;
+    private String lastName;
+
 }

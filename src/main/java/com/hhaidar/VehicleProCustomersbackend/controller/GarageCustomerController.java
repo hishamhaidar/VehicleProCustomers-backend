@@ -1,8 +1,6 @@
 package com.hhaidar.VehicleProCustomersbackend.controller;
 
-import com.hhaidar.VehicleProCustomersbackend.dto.AuthRequestDTO;
-import com.hhaidar.VehicleProCustomersbackend.dto.AuthenticationResponseDTO;
-import com.hhaidar.VehicleProCustomersbackend.dto.CustomerRegistrartionRequestDTO;
+import com.hhaidar.VehicleProCustomersbackend.dto.*;
 import com.hhaidar.VehicleProCustomersbackend.service.GarageCustomerServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +22,18 @@ public class GarageCustomerController {
         return customerServices.authenticate(authRequestt);
     }
     @PutMapping("/modify/{email}")
-    public ResponseEntity<String> modifyCustomerAccount(@PathVariable String email,@RequestBody CustomerRegistrartionRequestDTO registrartionRequest)
+    public ResponseEntity<String> modifyCustomerAccount(@PathVariable String email,@RequestBody CustomerDataModifyDTO dataModifyDTO)
     {
-        return customerServices.modifyAccountData(email,registrartionRequest);
+        return customerServices.modifyAccountData(email,dataModifyDTO);
+    }
+    @PutMapping("/password/{email}")
+    public ResponseEntity<String> modifyCustomerAccount(@PathVariable String email,@RequestBody CustomerPasswordChangeDTO passwordChangeDTO)
+    {
+        return customerServices.updatePassword(email,passwordChangeDTO);
+    }
+
+    @GetMapping("/getinfo/{userEmail}")
+    public ResponseEntity<UserInfoResponseDTO> getUserInfo(@PathVariable String userEmail){
+        return customerServices.getUserInfo(userEmail);
     }
 }

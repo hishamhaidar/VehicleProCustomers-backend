@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class CustomersVehicles {
     @Id
+    @GeneratedValue
     private Integer vehicleID;
     @Column(name = "owner_id")
     private Integer vehicleOwnerID;

@@ -1,12 +1,11 @@
 package com.hhaidar.VehicleProCustomersbackend.dto;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
+@Builder
 @Getter
-@EqualsAndHashCode
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerRegistrartionRequestDTO {
     private String firstName;
     private String lastName;

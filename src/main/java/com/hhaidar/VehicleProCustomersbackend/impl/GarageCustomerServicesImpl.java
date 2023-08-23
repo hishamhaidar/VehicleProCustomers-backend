@@ -1,9 +1,7 @@
 package com.hhaidar.VehicleProCustomersbackend.impl;
 
 import com.hhaidar.VehicleProCustomersbackend.config.JWTService;
-import com.hhaidar.VehicleProCustomersbackend.dto.AuthRequestDTO;
-import com.hhaidar.VehicleProCustomersbackend.dto.AuthenticationResponseDTO;
-import com.hhaidar.VehicleProCustomersbackend.dto.CustomerRegistrartionRequestDTO;
+import com.hhaidar.VehicleProCustomersbackend.dto.*;
 import com.hhaidar.VehicleProCustomersbackend.exceptions.UserExists;
 import com.hhaidar.VehicleProCustomersbackend.model.GarageCustomers;
 import com.hhaidar.VehicleProCustomersbackend.repo.GarageCustomersRepo;
@@ -50,18 +48,53 @@ public class GarageCustomerServicesImpl implements GarageCustomerServices {
     }
 
     @Override
-    public ResponseEntity<String> modifyAccountData(String email,CustomerRegistrartionRequestDTO registrartionRequest){
+    public ResponseEntity<String> modifyAccountData(String email, CustomerDataModifyDTO dataModifyDTO){
         Optional<GarageCustomers> userByCustomerEmail = customerRepo.findByCustomerEmail(email);
             if (!userByCustomerEmail.isPresent())
                 return ResponseEntity.badRequest().body(new UsernameNotFoundException("User doesnt exist").toString());
         GarageCustomers modifiedCustomer = userByCustomerEmail.get();
-        modifiedCustomer.setFirstName(registrartionRequest.getFirstName());
-        modifiedCustomer.setLastName(registrartionRequest.getLastName());
-        modifiedCustomer.setCustomerEmail(registrartionRequest.getEmail());
-        modifiedCustomer.setCustomerEmailPassword(passwordEncoder.encode(registrartionRequest.getPassword()));
+        if(modifiedCustomer.getCustomerEmail().equals(dataModifyDTO.getEmail())) {
+            modifiedCustomer.setFirstName(dataModifyDTO.getFirstName());
+            modifiedCustomer.setLastName(dataModifyDTO.getLastName());
+        }else {
+            Optional<GarageCustomers> newUserEmail = customerRepo.findByCustomerEmail(dataModifyDTO.getEmail());
+            if (newUserEmail.isPresent())
+                return ResponseEntity.badRequest().body("New email is already taken");
+            modifiedCustomer.setFirstName(dataModifyDTO.getFirstName());
+            modifiedCustomer.setLastName(dataModifyDTO.getLastName());
+            modifiedCustomer.setCustomerEmail(dataModifyDTO.getEmail());
+        }
+
         customerRepo.save(modifiedCustomer);
         return ResponseEntity.ok("User modified succesfully");
 
 
         }
+
+    @Override
+    public ResponseEntity<UserInfoResponseDTO> getUserInfo(String email) {
+        Optional<GarageCustomers> userByCustomerEmail = customerRepo.findByCustomerEmail(email);
+        if (!userByCustomerEmail.isPresent())
+            return ResponseEntity.badRequest().body(new UserInfoResponseDTO());
+        UserInfoResponseDTO infoResponseDTO = UserInfoResponseDTO.builder()
+                .userID(userByCustomerEmail.get().getCustomerID())
+                .firstName(userByCustomerEmail.get().getFirstName())
+                .lastName(userByCustomerEmail.get().getLastName())
+                .build();
+        return ResponseEntity.ok(infoResponseDTO);
+    }
+
+    @Override
+    public ResponseEntity<String> updatePassword(String email, CustomerPasswordChangeDTO passwordChangeDTO) {
+        Optional<GarageCustomers> customer = customerRepo.findByCustomerEmail(email);
+        if (!customer.isPresent())
+            return ResponseEntity.badRequest().body("User doesnt exist");
+        if(!passwordEncoder.matches(passwordChangeDTO.getCurrentPassword(), customer.get().getCustomerEmailPassword()))
+
+            return ResponseEntity.badRequest().body("Current password is incorrect");
+        GarageCustomers modifiedCus = customer.get();
+        modifiedCus.setCustomerEmailPassword(passwordEncoder.encode(passwordChangeDTO.getNewPassword()));
+        customerRepo.save(modifiedCus);
+        return ResponseEntity.ok("Password changed sucessfully");
+    }
 }

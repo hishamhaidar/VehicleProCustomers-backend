@@ -7,8 +7,10 @@ import com.hhaidar.VehicleProCustomersbackend.repo.BookingRepo;
 import com.hhaidar.VehicleProCustomersbackend.repo.GarageCustomersRepo;
 import com.hhaidar.VehicleProCustomersbackend.service.BookingSavingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -43,6 +45,14 @@ public class BookingSavingImpl implements BookingSavingService {
 
 
 
+    }
+
+    @Override
+    public ResponseEntity<ArrayList<Booking>> getMyBookings(Integer customerID) {
+       Optional<ArrayList<Booking>> myBookings= bookingRepo.findByCustomerID(customerID);
+        if (!myBookings.isPresent())
+            return ResponseEntity.ok().body(new ArrayList<>());
+        return ResponseEntity.ok(myBookings.get());
     }
 
     private void updateBookingStatus(Optional<Booking> booking, String bookingStatus) {
